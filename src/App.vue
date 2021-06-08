@@ -34,7 +34,7 @@
 				var list = sql.split("\t");
 				list = list.map(this.handleSqlItemLevelOne);
 				this.getSQLProperties(list);
-				console.log(list)
+				
 			},
 			handleSqlItemLevelOne: function(sqlItem, index) {
 				var resList = sqlItem.split("] ");
@@ -111,7 +111,7 @@
 				}
 				this.mdTableContentText = mdTextList.join("\r");
 				this.outputMdText = this.isCreateMdTableHeader ? (this.mdTableHeaderText + this.mdTableContentText) : this.mdTableContentText;
-				console.log(mdTextList)
+				
 			}
 			
 		}
