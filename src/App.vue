@@ -34,7 +34,7 @@
 				var list = sql.split("\t");
 				list = list.map(this.handleSqlItemLevelOne);
 				this.getSQLProperties(list);
-				
+
 			},
 			handleSqlItemLevelOne: function(sqlItem, index) {
 				var resList = sqlItem.split("] ");
@@ -44,7 +44,14 @@
 					if (type.indexOf("(") != -1 && type.indexOf(")") != -1) {
 						type = type.trimRight();
 						type = type.trimRight(",");
-						var rList = type.split(" ");
+						var rList = type.split(") ");
+						rList = rList.map((item) => {
+							var resText = item;
+							if (resText.indexOf("(") != -1) {
+								resText = resText + ")";
+							}
+							return resText;
+						});
 						resList = resList.concat(rList);
 					}
 				}
