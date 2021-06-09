@@ -2,6 +2,7 @@
 	<div>
 		<textarea v-model="inputSql" class="sql_input" placeholder="请输入SQL语句" />
 		<input class="create_header_checkbox" type="checkbox" v-model="isCreateMdTableHeader" />生成表头
+		<input class="create_header_checkbox" type="checkbox" v-model="isCreateMdTableOthers" />生成其他信息
 		<textarea v-model="outputMdText" class="sql_output" />
 	</div>
 </template>
@@ -13,9 +14,12 @@
 			return {
 				inputSql: "",
 				outputMdText: "", //输出框内容 
+				mdTableInfoText: "数据表说明：...\r\r", //数据表说明
 				mdTableHeaderText: "| 字段 | 类型 | 是否为空 | 默认值 | 说明 |\r| :--: | :--: | :--: | :--: | :--: |\r", //表头内容 
 				mdTableContentText: "", //表内容
+				mdTableUpdateLogText: "\r\r数据表更新日志\r\r| 修改内容 | 修改时间 | 修订人 |\r| :--: | :--: | :--: |\r| 修改了xxx | 2021-6-8 | 张三 |", //数据表更新日志
 				isCreateMdTableHeader: true, //是否生成表头
+				isCreateMdTableOthers: true, //是否生成其他信息
 			}
 		},
 		watch: {
@@ -23,7 +27,10 @@
 				this.handleSql(newVal);
 			},
 			isCreateMdTableHeader: function(newVal, oldVal) {
-				this.outputMdText = newVal ? (this.mdTableHeaderText + this.mdTableContentText) : this.mdTableContentText;
+				this.getResultOutputText();
+			},
+			isCreateMdTableOthers: function(newVal, oldVal) {
+				this.getResultOutputText();
 			}
 		},
 		mounted() {
@@ -117,8 +124,14 @@
 					mdTextList.push(mdText);
 				}
 				this.mdTableContentText = mdTextList.join("\r");
-				this.outputMdText = this.isCreateMdTableHeader ? (this.mdTableHeaderText + this.mdTableContentText) : this.mdTableContentText;
 				
+				this.getResultOutputText();
+				
+			},
+			getResultOutputText: function() {
+				var tableText = this.isCreateMdTableHeader ? (this.mdTableHeaderText + this.mdTableContentText) : this.mdTableContentText;
+				var resText = this.isCreateMdTableOthers ? (this.mdTableInfoText + tableText + this.mdTableUpdateLogText) : tableText;
+				this.outputMdText = resText;
 			}
 			
 		}
