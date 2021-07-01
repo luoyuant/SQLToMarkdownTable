@@ -62,7 +62,7 @@
 				
 				//获取默认值Sql
 				var defaultValueSqlList = list.filter(function(item) {
-					return item.indexOf("ALTER TABLE") != -1 && item.indexOf("ADD  CONSTRAINT") != -1 && item.indexOf("DEFAULT") != -1;
+					return item.indexOf("ALTER TABLE") != -1 && item.indexOf("DEFAULT") != -1;
 				});
 				this.handleSqlPropertiesDefaultValue(defaultValueSqlList);
 				
